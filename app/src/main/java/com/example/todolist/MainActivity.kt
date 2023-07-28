@@ -43,7 +43,23 @@ class MainActivity : AppCompatActivity() {
             arrayAdapter.notifyDataSetChanged()
         }
 
+        listView.setOnItemClickListener { adapterView, view, position, l ->
+            var alert = AlertDialog.Builder(this)
+            alert.setTitle("Delete")
+            alert.setMessage("Do you want to delete this item from the list")
+            alert.setCancelable(false)
+            alert.setNegativeButton("No",DialogInterface.OnClickListener {
+                    dialogInterface, i ->
+                dialogInterface.cancel()
+            })
+            alert.setPositiveButton("Yes",DialogInterface.OnClickListener { dialogInterface, i ->
+                itemList.removeAt((position))
+                arrayAdapter.notifyDataSetChanged()
+                fileHelper.writeData(itemList,applicationContext)
+            })
 
+            alert.create().show()
+        }
     }
 
 
